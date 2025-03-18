@@ -1,6 +1,8 @@
 # System Security & Hardening
 # File: ~/.bashrc.d/sys_sec.sh
 
+[ -f ~/.bashrc.d/logging_alerts.sh ] && . ~/.bashrc.d/logging_alerts.sh
+
 # Check if Essential Security Services are Running
 sec_check() {
     echo "=== Security Services Status ==="
@@ -25,3 +27,13 @@ watchlogs() {
 
 alias authlog='watchlogs'
 
+# SSH Alerts
+monitor_ssh_attempts() {
+    sudo journalctl -u ssh --since "1 hour ago" | grep "Failed password" | while read line; do
+        log_event "🚨 Failed SSH login detected: $line"
+        alert_terminal "🚨 Unauthorized SSH Attempt!"
+        #alert_email "Security Alert" "Failed SSH attempt detected!"
+    done
+}
+
+alias sshalerts='monitor_ssh_attempts'

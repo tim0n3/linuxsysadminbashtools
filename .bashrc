@@ -2,12 +2,13 @@
 # Author: tim0n3
 # Version: 1.2
 
+# Uncomment to . all files in the .bashrc.d directory.
 # Load Modular Bash Extensions if available
-if [ -d "$HOME/.bashrc.d" ]; then
-    for file in $HOME/.bashrc.d/*.sh; do
-        [ -r "$file" ] && source "$file"
-    done
-fi
+#if [ -d "$HOME/.bashrc.d" ]; then
+#    for file in $HOME/.bashrc.d/*.sh; do
+#        [ -r "$file" ] && . "$file"
+#    done
+#fi
 
 # 1️⃣ System Info & Performance Monitoring
 alias sysinfo='echo "CPU: $(lscpu | grep "Model name" | cut -d":" -f2)" && free -h && df -h'
@@ -60,11 +61,16 @@ export PROMPT_COMMAND='history -a; history -w; echo "$(date "+%Y-%m-%d %T") $(wh
 
 # Load Modular Scripts
 mkdir -p ~/.bashrc.d
-[ -f ~/.bashrc.d/sys_monitoring.sh ] && source ~/.bashrc.d/sys_monitoring.sh
-[ -f ~/.bashrc.d/network_tools.sh ] && source ~/.bashrc.d/network_tools.sh
-[ -f ~/.bashrc.d/security_hardening.sh ] && source ~/.bashrc.d/security_hardening.sh
-[ -f ~/.bashrc.d/git_devops.sh ] && source ~/.bashrc.d/git_devops.sh
-[ -f ~/.bashrc.d/automation.sh ] && source ~/.bashrc.d/automation.sh
+[ -f ~/.bashrc.d/automation.sh ] && . ~/.bashrc.d/automation.sh
+[ -f ~/.bashrc.d/cron_jobs.sh ] && . ~/.bashrc.d/cron_jobs.sh
+[ -f ~/.bashrc.d/logging_alerts.sh ] && . ~/.bashrc.d/logging_alerts.sh
+[ -f ~/.bashrc.d/net_debug.sh ] && . ~/.bashrc.d/net_debug.sh
+[ -f ~/.bashrc.d/network_tools.sh ] && . ~/.bashrc.d/network_tools.sh
+[ -f ~/.bashrc.d/security_hardening.sh ] && . ~/.bashrc.d/security_hardening.sh
+[ -f ~/.bashrc.d/sys_health.sh ] && . ~/.bashrc.d/sys_health.sh
+[ -f ~/.bashrc.d/sys_monitoring.sh ] && . ~/.bashrc.d/sys_monitoring.sh
+[ -f ~/.bashrc.d/sys_sec.sh ] && . ~/.bashrc.d/sys_sec.sh
+[ -f ~/.bashrc.d/user_mgmt.sh ] && . ~/.bashrc.d/user_mgmt.sh
 
 # 5️⃣ Network & Connectivity Tools
 alias myip='curl -s ifconfig.me'
@@ -132,6 +138,3 @@ export PS1='
 $(get_system_info)
 \e[38;5;244m╰─$(last_cmd_status) '"$PROMPT_SYMBOL"' \e[0m'
 
-
-# Apply Changes
-#. ~/.bashrc
